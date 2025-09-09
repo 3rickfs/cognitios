@@ -4,8 +4,8 @@ from abc import ABC, abstractmethod
 # Global variable
 OPS = []
 
-class stmemory_ops(ABC):
-    """ Abstract class to run short-term memory operations
+class execution_ops(ABC):
+    """ Abstract class to run execution operations
     """
 
     @abstractmethod
@@ -14,8 +14,8 @@ class stmemory_ops(ABC):
         pass
 
 
-class operation_1(stmemory_ops):
-    """ Run operation 1 of the short-term memory module
+class operation_1(execution_ops):
+    """ Run operation 1 of the execution module
     """
 
     def run_operation(**kwargs):
@@ -27,7 +27,7 @@ class operation_session:
     @staticmethod
     def run_config():
         operation_dict = {}
-        operations = stmemory_ops.__subclasses__()
+        operations = execution_ops.__subclasses__()
         for op in operations:
             op_name = op.__name__
             operation_dict[op_name] = op
@@ -36,7 +36,7 @@ class operation_session:
 
 
 class COMMOps:
-    """ User-facing static class to run short-term memory operations
+    """ User-facing static class to run execution operations
     """
     @staticmethod
     def run(**kwargs):
