@@ -45,7 +45,7 @@ def ingest_csv_data():
         # should be added in execution time. That makes it harder. 
         # Optional forms of deploying:
         #  - API service: write a template-based Flask app and then run it, save the process ID and kill it when required.
-        #  - CHOSEN #Container based#: similar than the above one but may require more memory as more layers are needed.
+        #  - CHOSEN ONE #Container based#: similar than the above one but may require more memory as more layers are needed.
         #     * This looks more stable and independent, although mem consumption is high
         #     * It anyway uses an API container on an specific venv
         #     * Containers might be deployed on local machine using specific cores and memory or on the cloud.
