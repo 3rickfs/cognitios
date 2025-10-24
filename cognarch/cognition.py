@@ -28,6 +28,16 @@ class att_op(cognitron_ops):
 
     def run_operation(**kwargs):
         print("Calling attention operations")
+        req = kwargs["request"]
+        qst = kwargs["question"]
+        if req == "question":
+            print("Who you are request")
+            kwa = {
+                "question": qst,
+                "ops": ["answer_question_op", "decorate_answer_op"]
+            }
+            res = ATTOps.run(**kwa)
+            kwargs['answer'] = res['deco_ans']
 
         return kwargs
 
@@ -104,7 +114,7 @@ class operation_session:
         return operation_dict
 
 
-class COGNITRONOps:
+class CognitronOps:
     """ User-facing static class to run cognitron operations
     """
     @staticmethod

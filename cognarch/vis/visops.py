@@ -14,12 +14,40 @@ class visualization_ops(ABC):
         pass
 
 
-class operation_1(visualization_ops):
+class decorate_msg_op(visualization_ops):
     """ Run operation 1 of the visualization module
     """
 
     def run_operation(**kwargs):
-        print("Running operation 1")
+        print("Decorate msg operation")
+
+        msg = kwargs["msg"]
+        msg = "<p>"+ msg + "</p>"
+
+        return kwargs
+
+
+class generate_user_interface(visualization_ops):
+    """ Generate files to be used for web-based user interface
+    """
+
+    def run_operation(**kwargs):
+        print("Generate user interface")
+
+
+
+
+        return kwargs
+
+
+
+class generate_user_interface(visualization_ops):
+    """ Generate files to be used for web-based user interface
+    """
+
+    def run_operation(**kwargs):
+        print("Generate user interface")
+
 
         return kwargs
 

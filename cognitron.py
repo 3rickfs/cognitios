@@ -1,13 +1,22 @@
 import yaml
 from flask import Flask, request
 
+from cognarch.cognition import CognitronOps
+
 app = Flask(__name__)
 app.config['FILE_PATH'] = "/path/to/somewhere"
 
 
 @app.route('/', method=['POST'])
 def about():
-    msg = """<p> Cognitron: Human-knowledge-centered manager machine </p>"""
+    msg = ""
+    kwargs = {
+        "request": "question",
+        "question": "who you are",
+        "ops": "att_op"
+    }
+    res = CognitronOps.run(**kwargs)
+    mgs = res["answer"]
 
     return msg
 
@@ -58,7 +67,7 @@ def ingest_csv_data():
 
 
 
-        res = 
+        res = []
 
 
     return "lala"

@@ -14,12 +14,50 @@ class attention_ops(ABC):
         pass
 
 
+class answer_question_op(attention_ops):
+    """ Run operation 1 of the attention module
+    """
+
+    def run_operation(**kwargs):
+        print("Answer question operation")
+
+        qst = kwargs["question"]
+        kwa = {
+            "question": qst,
+            "ops": ["answerquestion_op"]
+        }
+        res = COMMOps.run(**kwa)
+        msg = res["answer"]
+        kwargs["answer"] = msg
+
+    return kwargs
+
+
+class decorate_msg_op(attention_ops):
+    """ Decorate mesage gotten from comm
+    """
+
+    def run_operation(**kwargs):
+        print("Decorate answer")
+        msg = kwargs["answer"]
+        kwa = {
+            "msg": msg,
+            "ops": ["decorate_msg"]
+        }
+        res = VISOps.run(**kwa)
+        kwargs = res['deco_ans']
+
+        return kwargs
+
+
 class operation_1(attention_ops):
     """ Run operation 1 of the attention module
     """
 
     def run_operation(**kwargs):
         print("Running operation 1")
+
+
 
         return kwargs
 

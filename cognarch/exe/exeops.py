@@ -14,6 +14,7 @@ class execution_ops(ABC):
         pass
 
 
+
 class operation_1(execution_ops):
     """ Run operation 1 of the execution module
     """
@@ -22,6 +23,7 @@ class operation_1(execution_ops):
         print("Running operation 1")
 
         return kwargs
+
 
 class operation_session:
     @staticmethod

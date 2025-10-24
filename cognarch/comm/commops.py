@@ -14,6 +14,21 @@ class communication_ops(ABC):
         pass
 
 
+class answerquestion_op(communication_ops):
+    """ Answer user question
+    """
+
+    def run_operation(**kwargs):
+        print("Answer user question")
+        qst = kwargs["question"]
+        if qst == "who you are":
+            msg = "Hello World! I'm Cognitron: a cognitive component manager"
+
+        kwargs["answer"] = msg
+
+        return kwargs
+
+
 class operation_1(communication_ops):
     """ Run operation 1 of the communication_ops module
     """

@@ -6,7 +6,7 @@ In other words, this OS is meant to manage the entire AI life cycle as a support
 
 CognitiOS utilizes an agent-like entity, dubbed Cognitron, which orchestrates a series of modules forming what we may refer to as a Machine Cognitive Architecture (MCA). The MCA is basically an AI model stack, in which the user integrate AI models according to the tasks he's meant to do, or expect someone else to do, in his daily live or at a company.
 
-Cognitron works as a web application and chatbot that constantly adapts by it-self following user's behavior, providing a customized experience to its owner. This classifies CognitiOS as an Internet OS that might be called from whatever built-in web browser device.
+Cognitron works as a web application and chatbot that constantly adapts by it-self following user's preferences, providing a customized experience to its owner. This classifies CognitiOS as an Internet OS that might be called from whatever built-in web browser device.
 
 In short, what can you do with CognitiOS? First stage of this project will cover:
 - A customizable and responsive user interface for the user to govern knowledge (data sets) and AI models.
