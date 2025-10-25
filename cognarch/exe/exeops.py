@@ -37,7 +37,7 @@ class operation_session:
         return operation_dict
 
 
-class COMMOps:
+class EXEOps:
     """ User-facing static class to run execution operations
     """
     @staticmethod

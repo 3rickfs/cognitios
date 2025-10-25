@@ -1,5 +1,5 @@
 import yaml
-from flask import Flask, request
+from flask import Flask, request, json, jsonify
 
 from cognarch.cognition import CognitronOps
 
@@ -7,21 +7,24 @@ app = Flask(__name__)
 app.config['FILE_PATH'] = "/path/to/somewhere"
 
 
-@app.route('/', method=['POST'])
+@app.route('/') #, methods=['GET'])
 def about():
     msg = ""
     kwargs = {
         "request": "question",
         "question": "who you are",
-        "ops": "att_op"
+        "ops": ["att_op"]
     }
     res = CognitronOps.run(**kwargs)
-    mgs = res["answer"]
+    msg = jsonify(res) #["answer"]
+    msg.status_code = 200
 
-    return msg
+    print(f"msg: {msg}")
+
+    return msg #"LALALALALALA" #msg
 
 
-@app.route('/ingest_csv_data', method=['POST'])
+@app.route('/ingest_csv_data', methods=['POST'])
 def ingest_csv_data():
     """ Use a cognitive architecture to process data,
     predict, execute, visualize, among other tasks.

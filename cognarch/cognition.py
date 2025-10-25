@@ -1,13 +1,13 @@
 import os
 from abc import ABC, abstractmethod
 
-from att.attops import ATTOps
-from comm.commops import COMMOps
-from exe.exeops import EXEOps
-from lrn.lrnops import LRNOps
-from ltmem.ltmemops import LTMEMOps
-from stmem.stmemops import STMEMOps
-from vis.visops import VISOps
+from cognarch.att.attops import ATTOps
+from cognarch.comm.commops import COMMOps
+from cognarch.exe.exeops import EXEOps
+from cognarch.lrn.lrnops import LRNOps
+from cognarch.ltmem.ltmemops import LTMEMOps
+from cognarch.stmem.stmemops import STMEMOps
+from cognarch.vis.visops import VISOps
 
 # Global variable
 OPS = []
@@ -34,9 +34,10 @@ class att_op(cognitron_ops):
             print("Who you are request")
             kwa = {
                 "question": qst,
-                "ops": ["answer_question_op", "decorate_answer_op"]
+                "ops": ["answer_question_op", "decorate_msg_op"]
             }
             res = ATTOps.run(**kwa)
+            print(f"res: {res}")
             kwargs['answer'] = res['deco_ans']
 
         return kwargs

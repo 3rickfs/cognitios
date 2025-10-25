@@ -4,7 +4,7 @@ import requests
 import json
 
 
-class ingest_model_tests():
+class ingest_model_tests(unittest.TestCase):
     """
     def test_get_ai_model_info(unittest.TestCase):
         print("************** TEST ***************")
@@ -29,22 +29,22 @@ class ingest_model_tests():
         print(f"Cognitron reply: {cognitron_response}")
 
     """
-    def test_cognitron_hello_world(unittest.TestCase):
+    def test_cognitron_hello_world(self):
         print("**** TEST ****")
         print("** cognitron hello world **")
         print("- get greetings on html format")
 
-        expected_result = "<p> Hello World! I'm Cognitron: " + \
-                          "a cognitive component manager </p>"
+        expected_result = "<p>Hello World! I'm Cognitron: " + \
+                          "a cognitive component manager</p>"
 
         headers = {'Content-type': 'application/json'}
-        json_data = json.dumps(ai_model_info)
         cognitron_url = "http://127.0.0.1:5000"
         cognitron_hw_url = cognitron_url + "/"
- 
+
         try:
-            result = request.get(f"{cognitron_hw_url}", headers=headers)
-            cognitron_response = json.loads(result.text)
+            result = requests.get(cognitron_hw_url)
+            print(result.json())
+            cognitron_response = json.loads(result.text)['answer']
 
             print("__________________________________")
             print(f"Cognitron reply: {cognitron_response}")

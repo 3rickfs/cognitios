@@ -23,22 +23,9 @@ class decorate_msg_op(visualization_ops):
 
         msg = kwargs["msg"]
         msg = "<p>"+ msg + "</p>"
+        kwargs["deco_ans"] = msg
 
         return kwargs
-
-
-class generate_user_interface(visualization_ops):
-    """ Generate files to be used for web-based user interface
-    """
-
-    def run_operation(**kwargs):
-        print("Generate user interface")
-
-
-
-
-        return kwargs
-
 
 
 class generate_user_interface(visualization_ops):
@@ -63,7 +50,7 @@ class operation_session:
         return operation_dict
 
 
-class COMMOps:
+class VISOps:
     """ User-facing static class to run visualization operations
     """
     @staticmethod

@@ -35,7 +35,7 @@ class operation_session:
         return operation_dict
 
 
-class COMMOps:
+class LTMEMOps:
     """ User-facing static class to run long-term memory operations
     """
     @staticmethod
