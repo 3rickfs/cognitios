@@ -58,6 +58,72 @@ class decorate_msg_op(attention_ops):
         return kwargs
 
 
+class create_ai_model_register_op(attention_ops):
+    """ Create an AI model register
+    """
+
+    def run_operation(**kwargs):
+        print("Create ai model register operation")
+        kwa = {
+            "ops": ["create_ai_model_register_op"]
+        }
+        res = LTMEMOps.run(**kwa)
+        if res["result"] != "error":
+            kwargs['aimr_id'] = res['new_ai_model_register_id']
+        else:
+            e = kwargs["error_msg"]
+            raise(f"Error creating AI model register: {e}")
+
+        return kwargs
+
+
+class save_ai_model_info_op(attention_ops):
+    """ Save AI model information
+    """
+
+    def run_operation(**kwargs):
+        print("Save AI model information operation")
+        aimr_id = kwargs["aimr_id"]
+        ai_model_info = kwargs["ai_model_info"]
+        kwa = {
+            "aimr_id": aimr_id,
+            "ai_model_info": ai_model_info,
+            "ops": ["edit_ai_model_info_op"]
+        }
+        res = LTMEMOps.run(**kwa)
+        if res["result"] != "error":
+            kwargs['result_msg'] = res['edit_result_msg']
+
+        return kwargs
+
+
+class save_ai_model_weights_op(attention_ops):
+    """ Save AI model weights
+    """
+
+    def run_operation(**kwargs):
+        print("Save AI model weights operation")
+
+        return kwargs
+
+
+class get_ai_model_info_op(attention_ops):
+    """ Get AI model information
+    """
+
+    def run_operation(**kwargs):
+        print("Get AI model information operation")
+        ai_model_name = kwargs["ai_model_name"]
+        kwa = {
+            "ai_model_name": ai_model_name,
+            "ops": ["get_ai_model_info_op"]
+        }
+        res = LTMEMOps.run(**kwa)
+        kwargs['ai_model_info'] = res['ai_model_info']
+
+        return kwargs
+
+
 class operation_1(attention_ops):
     """ Run operation 1 of the attention module
     """

@@ -28,17 +28,47 @@ class att_op(cognitron_ops):
 
     def run_operation(**kwargs):
         print("Calling attention operations")
-        req = kwargs["request"]
-        qst = kwargs["question"]
         if req == "question":
             print("Who you are request")
+            req = kwargs["request"]
+            qst = kwargs["question"]
             kwa = {
                 "question": qst,
                 "ops": ["answer_question_op", "decorate_msg_op"]
             }
             res = ATTOps.run(**kwa)
-            print(f"res: {res}")
             kwargs['answer'] = res['deco_ans']
+        elif req == "upload_ai_model":
+            print("Request: upload ai model")
+            ai_model_info = kwargs["ai_model_info"]
+            try:
+                kwa = {
+                    "ai_model_info": ai_model_info,
+                    "ops": [
+                        "create_ai_model_register_op",
+                        "save_ai_model_info_op",
+                        "save_ai_model_weights_op"
+                    ]
+                }
+                res = ATTOps.run(**kwa)
+                kwargs['upload_ai_model_result_msg'] = res['result_msg']
+            except Exception as e:
+                kwargs['upload_ai_model_result_msg'] = e
+        elif req == "get_ai_model_info":
+            print("Request: get ai model info")
+            ai_model_name = kwargs["ai_model_info"]
+            try:
+                kwa = {
+                    "ai_model_name": ai_model_name,
+                    "ops": [
+                        "get_ai_model_info_op"
+                    ]
+                }
+                res = LTMEMOps.run(**kwa)
+                kwargs['ai_model_info'] = res['ai_model_info']
+            except Exception as e:
+                kwargs['ai_model_info'] = 0
+                kwargs['error_msg'] = e
 
         return kwargs
 
