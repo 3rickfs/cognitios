@@ -67,11 +67,10 @@ class create_ai_model_register_op(attention_ops):
         kwa = {
             "ops": ["create_ai_model_register_op"]
         }
-        res = LTMEMOps.run(**kwa)
-        if res["result"] != "error":
+        try:
+            res = LTMEMOps.run(**kwa)
             kwargs['aimr_id'] = res['new_ai_model_register_id']
-        else:
-            e = kwargs["error_msg"]
+        except Exception as e:
             raise(f"Error creating AI model register: {e}")
 
         return kwargs
@@ -90,9 +89,11 @@ class save_ai_model_info_op(attention_ops):
             "ai_model_info": ai_model_info,
             "ops": ["edit_ai_model_info_op"]
         }
-        res = LTMEMOps.run(**kwa)
-        if res["result"] != "error":
+        try:
+            res = LTMEMOps.run(**kwa)
             kwargs['result_msg'] = res['edit_result_msg']
+        except Exception as e:
+            raise(f"Error to update ai model info: {e}")
 
         return kwargs
 

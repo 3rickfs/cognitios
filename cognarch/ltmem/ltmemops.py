@@ -22,15 +22,27 @@ class create_ai_model_register_op(ltmemory_ops):
     def run_operation(**kwargs):
         print("Create AI model register operation")
         ai_model_info = kwargs["ai_model_info"]
+        # ToDo: run a command to create the folder if that does not exist
+        ai_model_folder_name = 'models'
         try:
-            with sqlite3.connect("ai_model_db.db")
+            with sqlite3.connect(f"{ai_model_folder_name}/ai_model_db.db") as conn:
                 print(f"Opened SQLite database with version {sqlite3.sqlite_version} successfully.")
-
+                cursor = conn.cursor()
+                sql_statements = [ 
+                    """CREATE TABLE IF NOT EXISTS ai_models (
+                            id INTEGER PRIMARY KEY, 
+                            model_name text NOT NULL, 
+                            creation_date DATE NOT NULL, 
+                            model_file_path text NULL,
+                            end_date DATE
+                       );"""
+                ]
+                # Execute sql query to create table
+                for s in sql_statements:
+                    cursor.execute(s)
+                conn.commit()
         except sqlite3.OperationalError as e:
             print("Failed to open database:", e)
-            kwargs["result"] = "error"
-            kwargs["error_msg"] = e
-
 
         return kwargs
 
@@ -41,6 +53,7 @@ class edit_ai_model_info_op(ltmemory_ops):
 
     def run_operation(**kwargs):
         print("Edit AI model information operation")
+        #ToDo: update table searching per ai model name
 
         return kwargs
 

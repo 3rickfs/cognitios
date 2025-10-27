@@ -67,6 +67,8 @@ class att_op(cognitron_ops):
                 res = LTMEMOps.run(**kwa)
                 kwargs['ai_model_info'] = res['ai_model_info']
             except Exception as e:
+                #ToDo: see whether it is better to keep cascading
+                #      the error through raise function
                 kwargs['ai_model_info'] = 0
                 kwargs['error_msg'] = e
 
