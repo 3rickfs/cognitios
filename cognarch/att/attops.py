@@ -114,9 +114,9 @@ class get_ai_model_info_op(attention_ops):
 
     def run_operation(**kwargs):
         print("Get AI model information operation")
-        ai_model_name = kwargs["ai_model_name"]
+        ai_model_name = kwargs["model_name"]
         kwa = {
-            "ai_model_name": ai_model_name,
+            "model_name": ai_model_name,
             "ops": ["get_ai_model_info_op"]
         }
         res = LTMEMOps.run(**kwa)

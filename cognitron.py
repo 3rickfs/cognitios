@@ -24,20 +24,31 @@ def about():
     return msg
 
 
-@app.route('/get_ai_model_info')
+@app.route('/get_ai_model_info', methods=['POST'])
 def get_ai_model_info():
     msg = ""
-    ai_model_name = request.get_json()["ai_model_name"]
-    kwargs = {
-        "request": "get_ai_model_info",
-        "ai_model_name": ai_model_name,
-        "ops": ["att_op"]
-    }
-    res = CognitronOps.run(**kwargs)
-    msg = jsonify(res)
-    msg.status_code = 200
-    print(f"msg: {msg}")
 
+    if request.method == 'POST':
+        ai_model_name = request.get_json()["ai_model_name"]
+        kwargs = {
+            "request": "get_ai_model_info",
+            "ai_model_name": ai_model_name,
+            "ops": ["att_op"]
+        }
+        try:
+            res = CognitronOps.run(**kwargs)
+            msg = jsonify(res)
+            msg.status_code = 200
+        except Exception as e:
+            msg = jsonify({"error_msg": e})
+            msg.status_code = 500
+    else:
+        error_msg = "No other method than POST is supported by this endoint"
+        msg = {"error_msg": error_msg}
+        msg = jsonify(msg)
+        msg.status_code = 500
+
+    print(f"msg: {msg}")
     return msg
 
 
@@ -56,9 +67,14 @@ def ingest_csv_data():
             "ai_model_info": input_data["ai_model_info"],
             "ops": ["att_op"]
         }
-        res = CognitronOps.run(**kwargs)
-        msg = jsonify(res)
-        msg.status_code = 200
+        try:
+            res = CognitronOps.run(**kwargs)
+            msg = jsonify(res)
+            msg.status_code = 200
+        except Exception as e:
+            res = {"error_msg": e}
+            msg = jsonify(res)
+            msg.status_code = 500
 
 
         """
@@ -75,14 +91,13 @@ def ingest_csv_data():
 
         # Send kwargs to the cognition
 
-        print(f"msg: {msg}")
-
     else:
-        error_msg = "No ther method than POST is supported by this endoint"
+        error_msg = "No other method than POST is supported by this endoint"
         msg = {"error_msg": error_msg}
         msg = jsonify(msg)
-        msg.status_code = 200
+        msg.status_code = 500
 
+    print(f"msg: {msg}")
     return msg
 
 

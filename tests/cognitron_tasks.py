@@ -17,7 +17,8 @@ class ingest_model_tests(unittest.TestCase):
             "ai_model_name": "ai_model_test_1",
             "ai_model_version": "v1.0.1",
             "ai_model_description": "detects plant diseases",
-            "ai_model_privacy": "private"
+            "ai_model_privacy": "private",
+            "ai_model_creation_date": "",
         }
 
 
@@ -27,11 +28,11 @@ class ingest_model_tests(unittest.TestCase):
         try:
             ai_model_info = {
                 "ai_model_info":{
-                    "ai_model_filename": "ai_model_test_1.pkl",
-                    "ai_model_name": "ai_model_test_1",
-                    "ai_model_version": "v1.0.1",
-                    "ai_model_description": "detects plant diseases",
-                    "ai_model_privacy": "private"
+                    "model_filename": "ai_model_test_1.pkl",
+                    "model_name": "ai_model_test_1",
+                    "model_version": "v1.0.1",
+                    "model_description": "detects plant diseases",
+                    "model_privacy": "private"
             }
             json_data = json.dumps(ai_model_info)
             cognitron_hw_url = cognitron_url + "/upload_ai_model"

@@ -53,7 +53,7 @@ class att_op(cognitron_ops):
                 res = ATTOps.run(**kwa)
                 kwargs['upload_ai_model_result_msg'] = res['result_msg']
             except Exception as e:
-                kwargs['upload_ai_model_result_msg'] = e
+                raise(f"Cognition was not able to upload ai model: {e})")
         elif req == "get_ai_model_info":
             print("Request: get ai model info")
             ai_model_name = kwargs["ai_model_info"]
@@ -67,10 +67,7 @@ class att_op(cognitron_ops):
                 res = LTMEMOps.run(**kwa)
                 kwargs['ai_model_info'] = res['ai_model_info']
             except Exception as e:
-                #ToDo: see whether it is better to keep cascading
-                #      the error through raise function
-                kwargs['ai_model_info'] = 0
-                kwargs['error_msg'] = e
+                raise(f"Cognition was not able to get ai model info: {e})")
 
         return kwargs
 
