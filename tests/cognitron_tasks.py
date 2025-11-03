@@ -6,7 +6,7 @@ import json
 
 class ingest_model_tests(unittest.TestCase):
 
-    def test_get_ai_model_info(unittest.TestCase):
+    def test_get_ai_model_info(self):
         print("************** TEST ***************")
         print("**** get_ai_model_info *****")
         print("- get information about the model to be uploaded")
@@ -33,23 +33,24 @@ class ingest_model_tests(unittest.TestCase):
                     "model_version": "v1.0.1",
                     "model_description": "detects plant diseases",
                     "model_privacy": "private"
+                }
             }
             json_data = json.dumps(ai_model_info)
             cognitron_hw_url = cognitron_url + "/upload_ai_model"
-            cognitron_response = request.post(f"{cognitron_url}",
+            cognitron_response = requests.post(f"{cognitron_hw_url}",
                                               data=json_data, headers=headers)
             print(f"Upload ai model result: {cognitron_response}")
 
             ai_model_name = {
                 "ai_model_name": "ai_model_test_1"
             }
-            json_data = json.dumps(ai_model_info)
+            json_data = json.dumps(ai_model_name)
             cognitron_hw_url = cognitron_url + "/get_ai_model_info"
-            cognitron_response = request.post(f"{cognitron_url}",
+            cognitron_response = requests.post(f"{cognitron_hw_url}",
                                               data=json_data, headers=headers)
 
             print(f"Cognitron get ai model info: {cognitron_response}")
-            cognitron_response = json.loads(result.text)['ai_model_info']
+            cognitron_response = json.loads(cognitron_response.text)['ai_model_info']
 
             print("__________________________________")
             print(f"Cognitron reply: {cognitron_response}")
