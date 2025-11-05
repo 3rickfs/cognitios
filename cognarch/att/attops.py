@@ -64,8 +64,10 @@ class create_ai_model_register_op(attention_ops):
 
     def run_operation(**kwargs):
         print("Create ai model register operation")
+        print(f"KWARGS: {kwargs}")
         kwa = {
-            "ops": ["create_ai_model_register_op"]
+            "ops": ["create_ai_model_register_op"],
+            "ai_model_name": kwargs['ai_model_info']['model_name']
         }
         try:
             res = LTMEMOps.run(**kwa)
@@ -114,9 +116,9 @@ class get_ai_model_info_op(attention_ops):
 
     def run_operation(**kwargs):
         print("Get AI model information operation")
-        ai_model_name = kwargs["model_name"]
+        ai_model_name = kwargs["ai_model_name"]
         kwa = {
-            "model_name": ai_model_name,
+            "ai_model_name": ai_model_name,
             "ops": ["get_ai_model_info_op"]
         }
         res = LTMEMOps.run(**kwa)

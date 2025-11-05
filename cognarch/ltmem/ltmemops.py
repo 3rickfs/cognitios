@@ -21,11 +21,10 @@ class create_ai_model_register_op(ltmemory_ops):
     """
 
     def run_operation(**kwargs):
-        print("Create AI model register operation")
-        ai_model_info = kwargs["ai_model_info"]
-        ai_model_name = ai_model_info["model_name"]
+        print("Create AI model register operation by LTMEM")
+        ai_model_name = kwargs["ai_model_name"]
         # ToDo: run a command to create the folder if that does not exist
-        ai_model_folder_name = 'models'
+        ai_model_folder_name = './cognarch/ltmem/models'
         # Getting current datetime
         tz = datetime.timezone.utc
         ft = "%Y-%m-%dT%H:%M:%S%z"
@@ -45,7 +44,7 @@ class create_ai_model_register_op(ltmemory_ops):
                             model_privacy text NULL,
                             creation_date DATE NOT NULL
                        );""",
-                    """INSERT INTO ai_models(model_name, creation_data)
+                    """INSERT INTO ai_models(model_name, creation_date)
                        VALUES(?,?)
                     """
                 ]
@@ -57,8 +56,11 @@ class create_ai_model_register_op(ltmemory_ops):
                 cursor.execute(sql_statements[1], minfo)
                 conn.commit()
 
+                # Get new model ID
+                kwargs['new_ai_model_register_id'] = cursor.lastrowid
+
         except sqlite3.OperationalError as e:
-            print("Failed to open database:", e)
+            raise("Failed to open database:", e)
 
         return kwargs
 
@@ -75,6 +77,7 @@ class edit_ai_model_info_op(ltmemory_ops):
         ai_model_version = kwargs["ai_model_info"]["model_version"]
         ai_model_description = kwargs["ai_model_info"]["model_description"]
         ai_model_privacy = kwargs["ai_model_info"]["model_privacy"]
+        ai_model_folder_name = './cognarch/ltmem/models'
         sql_statement = """
             UPDATE ai_models SET model_file_path=?,
                                  model_version=?,
@@ -83,14 +86,15 @@ class edit_ai_model_info_op(ltmemory_ops):
             WHERE id = ?
         """
         try:
-            with sqlite3.connect("ai_model_db") as conn:
+            with sqlite3.connect(f"{ai_model_folder_name}/ai_model_db.db") as conn:
                 cursor = conn.cursor()
                 cursor.execute(sql_statement, (ai_model_fp,
                                                ai_model_version,
                                                ai_model_description,
                                                ai_model_privacy,
                                                ai_model_id,
-                                              ))
+                                              )
+                              )
                 conn.commit()
             kwargs["edit_result_msg"] = "AI Model register updated"
 
@@ -106,15 +110,26 @@ class get_ai_model_info_op(ltmemory_ops):
 
     def run_operation(**kwargs):
         print("Get AI model information operation")
-        ai_model_name = kwargs["model_name"]
+        print(f"kwargs in LTMEM: {kwargs}")
+        ai_model_name = kwargs["ai_model_name"]
+        ai_model_folder_name = './cognarch/ltmem/models'
         try:
             sql_statement = """
-                SELECT * FROM ai_model WHERE model_name = ?
+                SELECT * FROM ai_models WHERE model_name = ?
             """
-            with sqlite3.connect("ai_model_db") as conn:
+            with sqlite3.connect(f"{ai_model_folder_name}/ai_model_db.db") as conn:
                 cursor = conn.cursor()
                 cursor.execute(sql_statement, (ai_model_name,))
-                ai_model_info = conn.fetchall()
+                aimi = cursor.fetchall()[-1]
+
+            ai_model_info = {
+                "ai_model_filename": aimi[2],
+                "ai_model_name": aimi[1],
+                "ai_model_version": aimi[3],
+                "ai_model_description": aimi[4],
+                "ai_model_privacy": aimi[5],
+            }
+
             kwargs["ai_model_info"] = ai_model_info
 
         except Exception as e:

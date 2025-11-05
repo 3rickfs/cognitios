@@ -28,9 +28,9 @@ class att_op(cognitron_ops):
 
     def run_operation(**kwargs):
         print("Calling attention operations")
+        req = kwargs["request"]
         if req == "question":
             print("Who you are request")
-            req = kwargs["request"]
             qst = kwargs["question"]
             kwa = {
                 "question": qst,
@@ -41,6 +41,7 @@ class att_op(cognitron_ops):
         elif req == "upload_ai_model":
             print("Request: upload ai model")
             ai_model_info = kwargs["ai_model_info"]
+            print(f"AI MODEL INFO: {ai_model_info}")
             try:
                 kwa = {
                     "ai_model_info": ai_model_info,
@@ -56,7 +57,7 @@ class att_op(cognitron_ops):
                 raise(f"Cognition was not able to upload ai model: {e})")
         elif req == "get_ai_model_info":
             print("Request: get ai model info")
-            ai_model_name = kwargs["ai_model_info"]
+            ai_model_name = kwargs["ai_model_name"]
             try:
                 kwa = {
                     "ai_model_name": ai_model_name,
@@ -64,7 +65,7 @@ class att_op(cognitron_ops):
                         "get_ai_model_info_op"
                     ]
                 }
-                res = LTMEMOps.run(**kwa)
+                res = ATTOps.run(**kwa)
                 kwargs['ai_model_info'] = res['ai_model_info']
             except Exception as e:
                 raise(f"Cognition was not able to get ai model info: {e})")

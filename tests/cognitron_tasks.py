@@ -17,8 +17,7 @@ class ingest_model_tests(unittest.TestCase):
             "ai_model_name": "ai_model_test_1",
             "ai_model_version": "v1.0.1",
             "ai_model_description": "detects plant diseases",
-            "ai_model_privacy": "private",
-            "ai_model_creation_date": "",
+            "ai_model_privacy": "private"
         }
 
 

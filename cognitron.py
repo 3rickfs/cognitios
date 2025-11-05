@@ -29,6 +29,7 @@ def get_ai_model_info():
     msg = ""
 
     if request.method == 'POST':
+        print(f"get jsn: {request.get_json()}")
         ai_model_name = request.get_json()["ai_model_name"]
         kwargs = {
             "request": "get_ai_model_info",
